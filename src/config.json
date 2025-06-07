@@ -1,0 +1,10 @@
+{
+    "env": {
+        "port": 3001
+    },
+    "database": {
+        "mongoose": {
+            "url": "mongodb://localhost:27017/bmw_database"
+        }
+    }
+}
