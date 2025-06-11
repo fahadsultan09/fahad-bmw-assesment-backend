@@ -5,7 +5,6 @@ const { Cars } = require('../models/carModel');
 import { Request, Response } from 'express';
 
 export const getAllElectricCars = async (req: Request, res: Response) => {
-    console.log("here------------------>")
     try {
         const cars = await Cars.find();
         return res.status(StatusCodes.OK).send(successResponse(cars, "Cars fetched successfully !!"));
@@ -38,7 +37,6 @@ export const updateElectricCars = async (req: Request, res: Response) => {
 
         const carID = req.params.id;
         const updatedCar = await Cars.findByIdAndUpdate(carID, req.body, { new: true });
-        console.log("updated car *************", updatedCar)
         if (!updatedCar) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: 'Car not found' });
         }
@@ -67,18 +65,16 @@ export const deleteElectricCars = async (req: Request, res: Response) => {
 
 export const searchCar = async (req: Request, res: Response) => {
     const { search, column, filterType, filterValue } = req.query;
-
+    console.log(req.query)
     try {
         let query: any = {};
 
-        // Search functionality
         if (search) {
             query.$or = Object.keys(Cars.schema.paths).map((key) => ({
                 [key]: { $regex: search, $options: 'i' },
             }));
         }
 
-        // Filter functionality
         if (column && filterType && filterValue) {
             const conditions: { [key: string]: any } = {
                 contains: { [column as string]: { $regex: filterValue, $options: 'i' } },

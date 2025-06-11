@@ -1,23 +1,25 @@
 const express = require('express');
+const router = express.Router();
 
-const {
+// Other imports
+import {
     getAllElectricCars,
     getElectricCarByID,
     createElectricCars,
     updateElectricCars,
     deleteElectricCars,
     searchCar,
-} = require('../controller/carController');
+} from '../controller/carController';
 
-const router = express.Router();
+// 🔍 Search route
+router.get('/cars/search', searchCar);
 
-router.get('/cars',getAllElectricCars);
-router.get('/cars/:id',getElectricCarByID)
+// Route definitions
+router.get('/cars', getAllElectricCars);
+router.get('/cars/:id', getElectricCarByID);
 router.post('/cars', createElectricCars);
 router.patch('/cars/:id', updateElectricCars);
-router.delete('/cars/:id',deleteElectricCars);
-
-router.get('/cars/search',searchCar)
+router.delete('/cars/:id', deleteElectricCars);
 
 
 module.exports = router;
